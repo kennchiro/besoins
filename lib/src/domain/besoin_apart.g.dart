@@ -23,13 +23,15 @@ class BesoinApartAdapter extends TypeAdapter<BesoinApart> {
       ..dateCreated = fields[3] as DateTime
       ..category = fields[4] as Category?
       ..groupTitle = fields[5] as String
-      ..isCompleted = fields[6] as bool;
+      ..isCompleted = fields[6] as bool
+      ..hasBudget = fields[7] as bool
+      ..budgetAmount = fields[8] as double?;
   }
 
   @override
   void write(BinaryWriter writer, BesoinApart obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.titre)
       ..writeByte(1)
@@ -43,7 +45,11 @@ class BesoinApartAdapter extends TypeAdapter<BesoinApart> {
       ..writeByte(5)
       ..write(obj.groupTitle)
       ..writeByte(6)
-      ..write(obj.isCompleted);
+      ..write(obj.isCompleted)
+      ..writeByte(7)
+      ..write(obj.hasBudget)
+      ..writeByte(8)
+      ..write(obj.budgetAmount);
   }
 
   @override

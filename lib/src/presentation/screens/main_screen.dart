@@ -11,25 +11,18 @@ class MainScreen extends ConsumerStatefulWidget {
   ConsumerState<MainScreen> createState() => _MainScreenState();
 }
 
-class _MainScreenState extends ConsumerState<MainScreen> with TickerProviderStateMixin {
-  late TabController _tabController;
+class _MainScreenState extends ConsumerState<MainScreen> {
   int _currentIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(() {
-      setState(() {
-        _currentIndex = _tabController.index;
-      });
-    });
-  }
+  final List<Widget> _screens = const [
+    HomeScreenBody(),
+    BesoinsApartScreen(),
+  ];
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
+  void _onItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   @override
@@ -47,28 +40,32 @@ class _MainScreenState extends ConsumerState<MainScreen> with TickerProviderStat
             onPressed: () => context.go('/summary'),
           ),
         ],
-        bottom: TabBar(
-          controller: _tabController,
-          tabs: const [
-            Tab(
-              icon: Icon(Icons.calendar_today),
-              text: 'Quotidiens',
-            ),
-            Tab(
-              icon: Icon(Icons.list_alt),
-              text: 'À Part',
-            ),
-          ],
-          indicatorColor: Theme.of(context).primaryColor,
-          labelColor: Theme.of(context).primaryColor,
-          unselectedLabelColor: Colors.grey[600],
-        ),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: const [
-          HomeScreenBody(), // Use the extracted body from HomeScreen
-          BesoinsApartScreen(),
+      body: IndexedStack(
+        index: _currentIndex,
+        children: _screens,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.grey[600],
+        backgroundColor: Colors.white,
+        elevation: 8,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            activeIcon: Icon(Icons.calendar_today),
+            label: 'Quotidiens',
+            tooltip: 'Besoins quotidiens',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_outlined),
+            activeIcon: Icon(Icons.list_alt),
+            label: 'À Part',
+            tooltip: 'Besoins à part',
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
@@ -87,7 +84,7 @@ class _MainScreenState extends ConsumerState<MainScreen> with TickerProviderStat
         foregroundColor: Colors.white,
         tooltip: _currentIndex == 0 ? 'Ajouter un nouveau besoin quotidien' : 'Ajouter un groupe de besoins',
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

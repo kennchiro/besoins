@@ -41,6 +41,15 @@ class BesoinApartNotifier extends StateNotifier<AsyncValue<List<BesoinApart>>> {
   Future<List<BesoinApart>> getBesoinsByGroupTitle(String groupTitle) async {
     return await ref.read(besoinApartRepositoryProvider).getBesoinsByGroupTitle(groupTitle);
   }
+
+  Future<void> updateGroupBudget(String groupTitle, bool hasBudget, double? budgetAmount) async {
+    await ref.read(besoinApartRepositoryProvider).updateGroupBudget(groupTitle, hasBudget, budgetAmount);
+    _loadBesoinsApart();
+  }
+
+  Future<BesoinApart?> getGroupBudgetInfo(String groupTitle) async {
+    return await ref.read(besoinApartRepositoryProvider).getGroupBudgetInfo(groupTitle);
+  }
 }
 
 final besoinApartNotifierProvider = StateNotifierProvider<BesoinApartNotifier, AsyncValue<List<BesoinApart>>>((ref) {

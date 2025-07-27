@@ -26,5 +26,11 @@ class BesoinApart extends HiveObject {
   @HiveField(6)
   bool isCompleted; // Whether this need has been fulfilled
   
-  BesoinApart() : isCompleted = false;
+  @HiveField(7)
+  bool hasBudget; // Whether this group has a budget
+  
+  @HiveField(8)
+  double? budgetAmount; // Budget amount for this group (only if hasBudget is true)
+  
+  BesoinApart() : isCompleted = false, hasBudget = false;
 }

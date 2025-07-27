@@ -1,14 +1,15 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import '../screens/edit_besoin_apart_screen.dart';
 import '../screens/main_screen.dart';
-import '../screens/home_screen.dart';
 import '../screens/add_besoin_screen.dart';
 import '../screens/add_besoin_apart_screen.dart';
 import '../screens/edit_besoin_screen.dart';
 import '../screens/monthly_summary_screen.dart';
 import '../screens/dashboard_screen.dart';
 import '../../domain/besoin.dart';
+import '../../domain/besoin_apart.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: <GoRoute>[
@@ -35,6 +36,13 @@ final GoRouter appRouter = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             final besoin = state.extra as Besoin; // Cast the extra to Besoin
             return EditBesoinScreen(besoin: besoin);
+          },
+        ),
+        GoRoute(
+          path: 'edit-apart',
+          builder: (BuildContext context, GoRouterState state) {
+            final besoinApart = state.extra as BesoinApart; // Cast the extra to BesoinApart
+            return EditBesoinApartScreen(besoinApart: besoinApart);
           },
         ),
         GoRoute(

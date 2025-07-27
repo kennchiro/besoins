@@ -7,6 +7,9 @@ import '../../application/category_notifier.dart';
 import '../../application/speech_service.dart';
 import '../../domain/besoin.dart';
 import '../../domain/category.dart';
+import '../widgets/shared/app_text_field.dart';
+import '../widgets/shared/app_button.dart';
+import '../widgets/shared/app_card.dart';
 
 class AddBesoinScreen extends ConsumerStatefulWidget {
   const AddBesoinScreen({super.key});
@@ -153,62 +156,49 @@ class _AddBesoinScreenState extends ConsumerState<AddBesoinScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Section
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.1),
-                      spreadRadius: 0,
-                      blurRadius: 10,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xFF6B73FF).withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(
-                            Icons.add_shopping_cart,
-                            color: Color(0xFF6B73FF),
-                            size: 24,
-                          ),
+              AppCard.info(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF6B73FF).withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        const SizedBox(width: 16),
-                        const Column(
+                        child: const Icon(
+                          Icons.add_shopping_cart,
+                          color: Color(0xFF6B73FF),
+                          size: 24,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Ajouter un besoin',
                               style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                                 color: Color(0xFF2D3748),
                               ),
                             ),
-                            SizedBox(height: 4),
+                            const SizedBox(height: 4),
                             Text(
                               'Définissez vos besoins quotidiens',
                               style: TextStyle(
                                 fontSize: 14,
-                                color: Color(0xFF6B7280),
+                                color: Colors.grey[600],
                               ),
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
@@ -235,11 +225,11 @@ class _AddBesoinScreenState extends ConsumerState<AddBesoinScreen> {
                     // Title Field
                     _buildSectionTitle('Informations générales'),
                     const SizedBox(height: 16),
-                    _buildTextField(
+                    AppTextField(
                       controller: _titreController,
-                      label: 'Titre du besoin',
-                      hint: 'Ex: Achat de riz',
-                      icon: Icons.title,
+                      labelText: 'Titre du besoin',
+                      hintText: 'Ex: Achat de riz',
+                      prefixIcon: Icons.title,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Veuillez entrer un titre';
@@ -254,13 +244,12 @@ class _AddBesoinScreenState extends ConsumerState<AddBesoinScreen> {
                     const SizedBox(height: 20),
 
                     // Description Field
-                    _buildTextField(
+                    AppTextField(
                       controller: _descriptionController,
-                      label: 'Description (optionnel)',
-                      hint: 'Ajoutez des détails sur ce besoin...',
-                      icon: Icons.description,
+                      labelText: 'Description (optionnel)',
+                      hintText: 'Ajoutez des détails sur ce besoin...',
+                      prefixIcon: Icons.description,
                       maxLines: 3,
-                      isOptional: true,
                     ),
 
                     const SizedBox(height: 24),

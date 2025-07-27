@@ -63,6 +63,22 @@ class BesoinApartRepositoryImpl implements BesoinApartRepository {
     final allBesoins = await getAllBesoinsApart();
     return allBesoins.where((b) => b.groupTitle == groupTitle).toList();
   }
+
+  @override
+  Future<void> updateGroupBudget(String groupTitle, bool hasBudget, double? budgetAmount) async {
+    final groupBesoins = await getBesoinsByGroupTitle(groupTitle);
+    for (final besoin in groupBesoins) {
+      besoin.hasBudget = hasBudget;
+      besoin.budgetAmount = budgetAmount;
+      await besoin.save();
+    }
+  }
+
+  @override
+  Future<BesoinApart?> getGroupBudgetInfo(String groupTitle) async {
+    final groupBesoins = await getBesoinsByGroupTitle(groupTitle);
+    return groupBesoins.isNotEmpty ? groupBesoins.first : null;
+  }
 }
 
 final besoinApartRepositoryProvider = Provider<BesoinApartRepository>((ref) => BesoinApartRepositoryImpl(ref));

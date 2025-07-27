@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 import '../../application/besoin_apart_notifier.dart';
 import '../../domain/besoin_apart.dart';
+import '../widgets/group_budget_manager.dart';
 
 class BesoinsApartScreen extends ConsumerStatefulWidget {
   const BesoinsApartScreen({super.key});
@@ -88,6 +91,8 @@ class _BesoinsApartScreenState extends ConsumerState<BesoinsApartScreen> {
                     collapsedBackgroundColor: Colors.white,
                     iconColor: const Color(0xFF8B5CF6),
                     collapsedIconColor: const Color(0xFF8B5CF6),
+                    shape: const Border(),
+                    collapsedShape: const Border(),
                     title: Row(
                       children: [
                         Container(
@@ -193,6 +198,13 @@ class _BesoinsApartScreenState extends ConsumerState<BesoinsApartScreen> {
                         color: const Color(0xFFF8FAFC),
                         child: Column(
                           children: [
+                            // Budget Management Section
+                            GroupBudgetManager(
+                              groupTitle: groupTitle,
+                              groupBesoins: groupBesoins,
+                              totalCost: totalCost,
+                            ),
+                            
                             if (groupBesoins.isNotEmpty) ...[
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
@@ -337,7 +349,7 @@ class _BesoinsApartScreenState extends ConsumerState<BesoinsApartScreen> {
                                                 await ref.read(besoinApartNotifierProvider.notifier).addBesoinApart(updatedBesoin);
                                               }
                                             } else if (value == 'edit') {
-                                              // TODO: Navigate to edit screen
+                                              context.push('/edit-apart', extra: besoin);
                                             } else if (value == 'delete') {
                                               final confirm = await _showDeleteDialog(context);
                                               if (confirm == true) {

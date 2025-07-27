@@ -7,4 +7,6 @@ abstract class BesoinApartRepository {
   Future<void> deleteBesoinApart(dynamic key);
   Future<List<String>> getAllGroupTitles();
   Future<List<BesoinApart>> getBesoinsByGroupTitle(String groupTitle);
+  Future<void> updateGroupBudget(String groupTitle, bool hasBudget, double? budgetAmount);
+  Future<BesoinApart?> getGroupBudgetInfo(String groupTitle);
 }

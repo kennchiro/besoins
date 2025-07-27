@@ -200,6 +200,8 @@ Future<bool?> _showDeleteDialog(BuildContext context) {
                     collapsedBackgroundColor: Colors.white,
                     iconColor: const Color(0xFF6B73FF),
                     collapsedIconColor: const Color(0xFF6B73FF),
+                    shape: const Border(),
+                    collapsedShape: const Border(),
                     title: Row(
                       children: [
                         Container(
